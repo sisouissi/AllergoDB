@@ -121,8 +121,8 @@ const App: React.FC = () => {
       <InfoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <footer className="text-center py-6 mt-8 text-gray-500 text-sm">
-        <p>Base de données des Allergènes moléculaires ImmunoCAP &copy; 2024</p>
-        <p>Application développée à but pédagogique par Dr Zouhair Souissi</p>
+        <p>Base de données des Allergènes moléculaires ImmunoCAP &copy; 2025</p>
+        <p>Application à but pédagogique développée par Dr Zouhair Souissi</p>
       </footer>
     </div>
   );
