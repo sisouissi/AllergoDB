@@ -1,5 +1,6 @@
+
 {
-  "name": "Explorateur d'Allergènes ImmunoCAP",
+  "name": "Base de données des Allergènes moléculaires ImmunoCAP",
   "description": "Une application interactive pour rechercher et filtrer les allergènes moléculaires en fonction de leur nom, type, réactivité croisée et capacité à induire des symptômes, basée sur les algorithmes de tests ImmunoCAP.",
   "requestFramePermissions": []
 }

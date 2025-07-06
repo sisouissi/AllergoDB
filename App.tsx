@@ -55,7 +55,7 @@ const App: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex justify-between items-center flex-wrap gap-4">
             <div>
-              <h1 className="text-3xl lg:text-4xl font-bold text-white">Explorateur d'Allergènes ImmunoCAP</h1>
+              <h1 className="text-3xl lg:text-4xl font-bold text-white">Base de données des Allergènes moléculaires ImmunoCAP</h1>
               <p className="text-red-100 mt-1">Recherchez et filtrez les allergènes moléculaires.</p>
             </div>
             <div className="flex items-center gap-4">
