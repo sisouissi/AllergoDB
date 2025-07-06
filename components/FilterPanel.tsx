@@ -1,0 +1,165 @@
+import React, { useMemo } from 'react';
+import { Allergen, AllergenType, SymptomSeverity, MolecularFamily } from '../types';
+
+interface FilterPanelProps {
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  selectedTypes: AllergenType[];
+  setSelectedTypes: (types: AllergenType[]) => void;
+  selectedSymptoms: SymptomSeverity[];
+  setSelectedSymptoms: (symptoms: SymptomSeverity[]) => void;
+  selectedExtracts: string[];
+  setSelectedExtracts: (extracts: string[]) => void;
+  selectedFamily: MolecularFamily | null;
+  setSelectedFamily: (family: MolecularFamily | null) => void;
+  allAllergens: Allergen[];
+}
+
+const FilterPanel: React.FC<FilterPanelProps> = ({
+  searchTerm,
+  setSearchTerm,
+  selectedTypes,
+  setSelectedTypes,
+  selectedSymptoms,
+  setSelectedSymptoms,
+  selectedExtracts,
+  setSelectedExtracts,
+  selectedFamily,
+  setSelectedFamily,
+  allAllergens
+}) => {
+
+  const uniqueExtracts = useMemo(() => {
+    const extracts = allAllergens.map(a => a.extract);
+    return [...new Set(extracts)].sort((a, b) => a.localeCompare(b));
+  }, [allAllergens]);
+
+  const handleTypeChange = (type: AllergenType) => {
+    const newTypes = selectedTypes.includes(type)
+      ? selectedTypes.filter(t => t !== type)
+      : [...selectedTypes, type];
+    setSelectedTypes(newTypes);
+  };
+
+  const handleSymptomChange = (symptom: SymptomSeverity) => {
+    const newSymptoms = selectedSymptoms.includes(symptom)
+      ? selectedSymptoms.filter(s => s !== symptom)
+      : [...selectedSymptoms, symptom];
+    setSelectedSymptoms(newSymptoms);
+  };
+
+  const handleExtractChange = (extract: string) => {
+    const newExtracts = selectedExtracts.includes(extract)
+      ? selectedExtracts.filter(e => e !== extract)
+      : [...selectedExtracts, extract];
+    setSelectedExtracts(newExtracts);
+  };
+  
+  const resetFilters = () => {
+    setSearchTerm('');
+    setSelectedTypes([]);
+    setSelectedSymptoms([]);
+    setSelectedExtracts([]);
+    setSelectedFamily(null);
+  };
+
+  return (
+    <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center mb-6">
+        <h2 className="text-xl font-bold text-gray-800">Filtres</h2>
+        <button 
+            onClick={resetFilters}
+            className="px-4 py-2 text-sm font-medium text-thermo-red bg-red-100 rounded-md hover:bg-red-200 transition-colors"
+        >
+            Réinitialiser
+        </button>
+      </div>
+
+      <div className="mb-6">
+        <label htmlFor="search" className="block text-lg font-medium text-gray-700 mb-2">Recherche</label>
+        <input
+          id="search"
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Ex: rBet v 1, Arachide..."
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-thermo-red focus:border-thermo-red transition"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 mb-6">
+        {/* Type Filter */}
+        <div>
+          <h3 className="text-lg font-medium text-gray-700 mb-3">Type d'allergène</h3>
+          <div className="flex flex-row space-x-6">
+            {(Object.values(AllergenType)).map(type => (
+              <label key={type} className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={selectedTypes.includes(type)}
+                  onChange={() => handleTypeChange(type)}
+                  className="h-5 w-5 rounded border-gray-300 text-thermo-red focus:ring-thermo-red"
+                />
+                <span className="text-gray-700">{type}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Symptom Filter */}
+        <div>
+          <h3 className="text-lg font-medium text-gray-700 mb-3">Symptômes induits</h3>
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            {(Object.values(SymptomSeverity)).map(symptom => (
+              <label key={symptom} className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={selectedSymptoms.includes(symptom)}
+                  onChange={() => handleSymptomChange(symptom)}
+                  className="h-5 w-5 rounded border-gray-300 text-thermo-red focus:ring-thermo-red"
+                />
+                <span className="text-gray-700">{symptom}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+        
+        {/* Molecular Family Filter (Dropdown) */}
+        <div>
+            <h3 className="text-lg font-medium text-gray-700 mb-3">Principales familles</h3>
+            <select
+                name="molecular-family"
+                value={selectedFamily || ''}
+                onChange={(e) => setSelectedFamily(e.target.value as MolecularFamily || null)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-thermo-red focus:border-thermo-red transition bg-white"
+            >
+                <option value="">Toutes les familles</option>
+                {(Object.values(MolecularFamily)).map(family => (
+                <option key={family} value={family}>{family}</option>
+                ))}
+            </select>
+        </div>
+      </div>
+        
+      {/* Extract Filter */}
+      <div>
+        <h3 className="text-lg font-medium text-gray-700 mb-3">Extrait allergénique</h3>
+        <div className="space-y-1">
+          {uniqueExtracts.map(extract => (
+            <label key={extract} className="flex items-center space-x-2 cursor-pointer p-1 rounded hover:bg-thermo-gray-light">
+              <input
+                type="checkbox"
+                checked={selectedExtracts.includes(extract)}
+                onChange={() => handleExtractChange(extract)}
+                className="h-5 w-5 rounded border-gray-300 text-thermo-red focus:ring-thermo-red flex-shrink-0"
+              />
+              <span className="text-gray-700 text-sm">{extract}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FilterPanel;
