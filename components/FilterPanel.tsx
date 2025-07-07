@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { Allergen, AllergenType, SymptomSeverity, MolecularFamily } from '../types';
+import React, { useMemo, useState } from 'react';
+import { Allergen, AllergenType, SymptomSeverity, MolecularFamily, AllergenCategory } from '../types';
 
 interface FilterPanelProps {
   searchTerm: string;
@@ -28,11 +28,35 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   setSelectedFamily,
   allAllergens
 }) => {
+  const [openCategories, setOpenCategories] = useState<string[]>([]);
 
-  const uniqueExtracts = useMemo(() => {
-    const extracts = allAllergens.map(a => a.extract);
-    return [...new Set(extracts)].sort((a, b) => a.localeCompare(b));
+  const groupedExtracts = useMemo(() => {
+    const groups: Record<string, Set<string>> = {};
+    const categoryOrder = Object.values(AllergenCategory);
+
+    allAllergens.forEach(allergen => {
+        if (!groups[allergen.category]) {
+            groups[allergen.category] = new Set();
+        }
+        groups[allergen.category].add(allergen.extract);
+    });
+
+    const sortedGroupedExtracts: Record<string, string[]> = {};
+    // Sort categories based on the enum order for a logical layout
+    Object.keys(groups).sort((a,b) => categoryOrder.indexOf(a as AllergenCategory) - categoryOrder.indexOf(b as AllergenCategory)).forEach(category => {
+        sortedGroupedExtracts[category] = Array.from(groups[category]).sort((a,b) => a.localeCompare(b));
+    });
+
+    return sortedGroupedExtracts;
   }, [allAllergens]);
+  
+  const toggleCategory = (category: string) => {
+    setOpenCategories(prevOpen =>
+        prevOpen.includes(category)
+            ? prevOpen.filter(c => c !== category)
+            : [...prevOpen, category]
+    );
+  };
 
   const handleTypeChange = (type: AllergenType) => {
     const newTypes = selectedTypes.includes(type)
@@ -61,6 +85,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     setSelectedSymptoms([]);
     setSelectedExtracts([]);
     setSelectedFamily(null);
+    setOpenCategories([]);
   };
 
   return (
@@ -87,7 +112,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 mb-6">
+      <div className="space-y-6">
         {/* Type Filter */}
         <div>
           <h3 className="text-lg font-medium text-gray-700 mb-3">Type d'allergène</h3>
@@ -139,23 +164,52 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 ))}
             </select>
         </div>
-      </div>
         
-      {/* Extract Filter */}
-      <div>
-        <h3 className="text-lg font-medium text-gray-700 mb-3">Extrait allergénique</h3>
-        <div className="space-y-1">
-          {uniqueExtracts.map(extract => (
-            <label key={extract} className="flex items-center space-x-2 cursor-pointer p-1 rounded hover:bg-thermo-gray-light">
-              <input
-                type="checkbox"
-                checked={selectedExtracts.includes(extract)}
-                onChange={() => handleExtractChange(extract)}
-                className="h-5 w-5 rounded border-gray-300 text-thermo-red focus:ring-thermo-red flex-shrink-0"
-              />
-              <span className="text-gray-700 text-sm">{extract}</span>
-            </label>
-          ))}
+        {/* Extract Filter Accordion */}
+        <div>
+          <h3 className="text-lg font-medium text-gray-700 mb-3">Extrait allergénique ImmunoCAP</h3>
+          <div className="space-y-1 border border-gray-200 rounded-lg">
+            {Object.entries(groupedExtracts).map(([category, extracts], index) => {
+                const isOpen = openCategories.includes(category);
+                return (
+                    <div key={category} className={`border-b border-gray-200 last:border-b-0`}>
+                        <button
+                            onClick={() => toggleCategory(category)}
+                            className="w-full flex justify-between items-center p-3 text-left font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none transition-colors"
+                            aria-expanded={isOpen}
+                        >
+                            <span>{category}</span>
+                            <svg
+                                className={`w-5 h-5 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        {isOpen && (
+                            <div className="pl-6 pr-3 pb-3 pt-1 bg-white">
+                                <div className="space-y-1">
+                                    {extracts.map(extract => (
+                                        <label key={extract} className="flex items-center space-x-2 cursor-pointer p-1 rounded">
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedExtracts.includes(extract)}
+                                                onChange={() => handleExtractChange(extract)}
+                                                className="h-4 w-4 rounded border-gray-300 text-thermo-red focus:ring-thermo-red flex-shrink-0"
+                                            />
+                                            <span className="text-gray-700 text-sm">{extract}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                );
+            })}
+          </div>
         </div>
       </div>
     </div>
