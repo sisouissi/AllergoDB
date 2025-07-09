@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Allergen } from '../types';
 import { SendIcon } from './icons';
 
@@ -21,8 +22,6 @@ const GeminiChat: React.FC<GeminiChatProps> = ({ isOpen, onClose, allAllergens }
   const [isLoading, setIsLoading] = useState(false);
   const chatHistoryRef = useRef<HTMLDivElement>(null);
 
-  const systemInstruction = `You are a world-class expert allergist assistant. Your knowledge base is strictly limited to the provided JSON data about molecular allergens. Do not use any external knowledge. You must answer the user's questions based ONLY on this data. The data is as follows: ${JSON.stringify(allAllergens)}. Answer in French.`;
-
   useEffect(() => {
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
@@ -42,24 +41,34 @@ const GeminiChat: React.FC<GeminiChatProps> = ({ isOpen, onClose, allAllergens }
 
     const userMessage: Message = { sender: 'user', text: input };
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = input;
     setInput('');
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: input,
-        config: {
-          systemInstruction: systemInstruction,
-        },
+      const response = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: currentInput,
+        }),
       });
 
-      const aiMessage: Message = { sender: 'ai', text: response.text };
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.error || `Le serveur a répondu avec le statut ${response.status}`);
+      }
+      
+      const aiMessage: Message = { sender: 'ai', text: responseData.text };
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
-      console.error('Error calling Gemini API:', error);
-      const errorMessage: Message = { sender: 'ai', text: "Désolé, une erreur s'est produite. Veuillez réessayer." };
+      console.error('Error calling chat backend:', error);
+      const errorMessageText = error instanceof Error 
+        ? `Désolé, une erreur s'est produite: ${error.message}`
+        : "Désolé, une erreur inconnue s'est produite. Veuillez réessayer.";
+
+      const errorMessage: Message = { sender: 'ai', text: errorMessageText };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
@@ -94,7 +103,25 @@ const GeminiChat: React.FC<GeminiChatProps> = ({ isOpen, onClose, allAllergens }
           {messages.map((msg, index) => (
             <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-md lg:max-w-lg p-3 rounded-2xl ${msg.sender === 'user' ? 'bg-thermo-red text-white' : 'bg-thermo-gray-light text-gray-800'}`}>
-                <p style={{ whiteSpace: 'pre-wrap' }}>{msg.text}</p>
+                {msg.sender === 'user' ? (
+                  <p className="whitespace-pre-wrap">{msg.text}</p>
+                ) : (
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      h1: ({node, ...props}) => <h1 className="text-xl font-bold mb-2" {...props} />,
+                      h2: ({node, ...props}) => <h2 className="text-lg font-bold mb-2" {...props} />,
+                      h3: ({node, ...props}) => <h3 className="font-bold mb-1" {...props} />,
+                      p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                      ul: ({node, ...props}) => <ul className="list-disc list-outside pl-5 mb-2 space-y-1" {...props} />,
+                      ol: ({node, ...props}) => <ol className="list-decimal list-outside pl-5 mb-2 space-y-1" {...props} />,
+                      li: ({node, ...props}) => <li className="pl-1" {...props} />,
+                      a: ({node, ...props}) => <a className="text-blue-600 hover:underline" {...props} />,
+                    }}
+                  >
+                    {msg.text}
+                  </ReactMarkdown>
+                )}
               </div>
             </div>
           ))}
