@@ -5,6 +5,20 @@ interface IconProps {
   className?: string;
 }
 
+export const ChatIcon: React.FC<IconProps> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+);
+
+export const SendIcon: React.FC<IconProps> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+    </svg>
+);
+
+
 const TreeIcon: React.FC<IconProps> = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22v-8m0-4V2" />
@@ -16,7 +30,7 @@ const TreeIcon: React.FC<IconProps> = ({ className }) => (
 
 const AnimalIcon: React.FC<IconProps> = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12.55 15.65c-1.28-1.25-1.28-3.25 0-4.5l3.8-3.8c1.28-1.25 3.32-1.25 4.6 0l.4.4c1.28 1.25 1.28 3.25 0 4.5l-3.8 3.8c-1.28 1.25-3.32 1.25-4.6 0Z" />
+    <path d="M12.55 15.65c-1.28-1.25-1.28-3.25 0-4.5l3.8-3.8c1.28-1.25 3.32-1.25 4.6 0l.4.4c1.28 1.25 1.28 3.25 0 4.5l-3.8 3.8c-1.28 1.25-3.32-1.25-4.6 0Z" />
     <path d="M12 17.5a2.5 2.5 0 0 1-2.5-2.5V11a5 5 0 0 0-5-5H3" />
     <path d="m15 15-5 5" />
     <path d="M2 22v-2c0-1.1.9-2 2-2h3" />

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Allergen, AllergenType, SymptomSeverity, MolecularFamily, AllergenCategory } from '../types';
+import { Allergen, AllergenType, SymptomSeverity, MolecularFamily, AllergenCategory, Pathology } from '../types';
 
 interface FilterPanelProps {
   searchTerm: string;
@@ -12,6 +12,8 @@ interface FilterPanelProps {
   setSelectedExtracts: (extracts: string[]) => void;
   selectedFamily: MolecularFamily | null;
   setSelectedFamily: (family: MolecularFamily | null) => void;
+  selectedPathology: Pathology | null;
+  setSelectedPathology: (pathology: Pathology | null) => void;
   allAllergens: Allergen[];
 }
 
@@ -26,6 +28,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   setSelectedExtracts,
   selectedFamily,
   setSelectedFamily,
+  selectedPathology,
+  setSelectedPathology,
   allAllergens
 }) => {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
@@ -85,6 +89,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     setSelectedSymptoms([]);
     setSelectedExtracts([]);
     setSelectedFamily(null);
+    setSelectedPathology(null);
     setOpenCategories([]);
   };
 
@@ -129,6 +134,22 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               </label>
             ))}
           </div>
+        </div>
+
+        {/* Pathology Filter (Dropdown) */}
+        <div>
+            <h3 className="text-lg font-medium text-gray-700 mb-3">Pathologies allergiques</h3>
+            <select
+                name="pathology"
+                value={selectedPathology || ''}
+                onChange={(e) => setSelectedPathology(e.target.value as Pathology || null)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-thermo-red focus:border-thermo-red transition bg-white"
+            >
+                <option value="">Toutes les pathologies</option>
+                {(Object.values(Pathology)).map(pathology => (
+                <option key={pathology} value={pathology}>{pathology}</option>
+                ))}
+            </select>
         </div>
 
         {/* Symptom Filter */}

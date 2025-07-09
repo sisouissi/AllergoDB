@@ -1,5 +1,5 @@
 {
-  "name": "base-de-données-des-allergènes-moléculaires-immunocap",
+  "name": "base-de-données-détaillée-des-allergènes-moléculaires-immunocap",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "@google/genai": "google"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

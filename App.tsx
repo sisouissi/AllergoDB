@@ -1,10 +1,12 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { Allergen, AllergenType, SymptomSeverity, MolecularFamily, molecularFamilyDescriptions } from './types';
+import { Allergen, AllergenType, SymptomSeverity, MolecularFamily, molecularFamilyDescriptions, Pathology } from './types';
 import { allergens } from './data/allergens';
 import AllergenCard from './components/AllergenCard';
 import FilterPanel from './components/FilterPanel';
 import InfoModal from './components/InfoModal';
+import GeminiChat from './components/GeminiChat';
+import { ChatIcon } from './components/icons';
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,7 +14,9 @@ const App: React.FC = () => {
   const [selectedSymptoms, setSelectedSymptoms] = useState<SymptomSeverity[]>([]);
   const [selectedExtracts, setSelectedExtracts] = useState<string[]>([]);
   const [selectedFamily, setSelectedFamily] = useState<MolecularFamily | null>(null);
+  const [selectedPathology, setSelectedPathology] = useState<Pathology | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   useEffect(() => {
     if (selectedFamily) {
@@ -45,9 +49,13 @@ const App: React.FC = () => {
       const familyMatch =
         !selectedFamily || allergen.molecularFamily === selectedFamily;
 
-      return searchTermMatch && typeMatch && symptomMatch && extractMatch && familyMatch;
+      const pathologyMatch =
+        !selectedPathology ||
+        (allergen.pathologies && allergen.pathologies.includes(selectedPathology));
+
+      return searchTermMatch && typeMatch && symptomMatch && extractMatch && familyMatch && pathologyMatch;
     }).sort((a, b) => a.name.localeCompare(b.name));
-  }, [searchTerm, selectedTypes, selectedSymptoms, selectedExtracts, selectedFamily]);
+  }, [searchTerm, selectedTypes, selectedSymptoms, selectedExtracts, selectedFamily, selectedPathology]);
 
   return (
     <div className="min-h-screen bg-thermo-gray-light font-sans">
@@ -91,6 +99,8 @@ const App: React.FC = () => {
             setSelectedExtracts={setSelectedExtracts}
             selectedFamily={selectedFamily}
             setSelectedFamily={setSelectedFamily}
+            selectedPathology={selectedPathology}
+            setSelectedPathology={setSelectedPathology}
             allAllergens={allergens}
           />
         </aside>
@@ -119,6 +129,21 @@ const App: React.FC = () => {
       </div>
 
       <InfoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      
+      <button
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-6 right-6 bg-thermo-red text-white p-4 rounded-full shadow-lg hover:bg-thermo-red-dark transition-all transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-thermo-red z-40"
+        aria-label="Ouvrir l'assistant IA"
+      >
+        <ChatIcon className="w-8 h-8"/>
+      </button>
+
+      <GeminiChat 
+        isOpen={isChatOpen} 
+        onClose={() => setIsChatOpen(false)} 
+        allAllergens={allergens} 
+      />
+
 
       <footer className="text-center py-6 mt-8 text-gray-500 text-sm">
         <p>Base de données des Allergènes moléculaires ImmunoCAP &copy; 2025</p>

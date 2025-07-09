@@ -1,4 +1,4 @@
-import { Allergen, AllergenType, SymptomSeverity, CrossReactivityLevel, AllergenCategory, MolecularFamily } from '../types';
+import { Allergen, AllergenType, SymptomSeverity, CrossReactivityLevel, AllergenCategory, MolecularFamily, Pathology } from '../types';
 
 export const allergens: Allergen[] = [
   // === POLLENS D'ARBRES ===
@@ -13,7 +13,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.PROBABLE,
     crossReactivityDetails: "Réactivité croisée avec les allergènes PR-10 (pomme, noisette, céleri, etc.).",
     description: "Marqueur de sensibilisation primaire au bouleau. Associé au syndrome d'allergie pollen-aliment.",
-    molecularFamily: MolecularFamily.PR10
+    molecularFamily: MolecularFamily.PR10,
+    pathologies: [Pathology.RHINITIS]
   },
   {
     id: 't216',
@@ -41,6 +42,19 @@ export const allergens: Allergen[] = [
     description: "Allergène mineur de réactivité croisée (polcalcine).",
     molecularFamily: MolecularFamily.POLCALCINS
   },
+   {
+    id: 't221',
+    name: 'rBet v 2 + rBet v 4',
+    source: 'Bouleau',
+    extract: 'Bouleau (t3)',
+    category: AllergenCategory.POLLEN_TREES,
+    type: AllergenType.MINOR,
+    symptoms: [SymptomSeverity.LOCAL],
+    crossReactivity: CrossReactivityLevel.HIGH,
+    crossReactivityDetails: "Combinaison des panallergènes profiline et polcalcine.",
+    description: "Test combiné de la profiline et de la polcalcine du bouleau, marqueur de polysensibilisation aux pollens.",
+    molecularFamily: MolecularFamily.PROFILINS
+  },
   {
     id: 't225',
     name: 'rBet v 6',
@@ -54,6 +68,20 @@ export const allergens: Allergen[] = [
     description: "Allergène mineur à réactivité croisée."
   },
   {
+    id: 'alng1',
+    name: 'rAln g 1',
+    source: 'Aulne',
+    extract: 'Aulne (t2)',
+    category: AllergenCategory.POLLEN_TREES,
+    type: AllergenType.MAJOR,
+    symptoms: [SymptomSeverity.LOCAL, SymptomSeverity.SYSTEMIC],
+    crossReactivity: CrossReactivityLevel.HIGH,
+    crossReactivityDetails: "PR-10, homologue de Bet v 1. Forte réactivité croisée avec le pollen de bouleau.",
+    description: "Allergène majeur de l'aulne, homologue de Bet v 1. Responsable du syndrome d'allergie pollen-aliment.",
+    molecularFamily: MolecularFamily.PR10,
+    pathologies: [Pathology.RHINITIS]
+  },
+  {
     id: 't224',
     name: 'rOle e 1',
     source: 'Olivier/Frêne',
@@ -63,7 +91,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Spécifique à l'olivier et au frêne. Marqueur d'une sensibilisation primaire.",
-    description: "Allergène majeur de l'olivier, essentiel pour le diagnostic de l'allergie au pollen de frêne également."
+    description: "Allergène majeur de l'olivier, essentiel pour le diagnostic de l'allergie au pollen de frêne également.",
+    pathologies: [Pathology.RHINITIS]
   },
   {
     id: 't227',
@@ -103,6 +132,19 @@ export const allergens: Allergen[] = [
     description: "Marqueur d'une véritable sensibilisation au cyprès, indiquant une allergie primaire."
   },
   {
+    id: 'cryj1',
+    name: 'nCry j 1',
+    source: 'Cèdre du Japon',
+    extract: 'Cèdre du Japon (t17)',
+    category: AllergenCategory.POLLEN_TREES,
+    type: AllergenType.MAJOR,
+    symptoms: [SymptomSeverity.SYSTEMIC],
+    crossReactivity: CrossReactivityLevel.HIGH,
+    crossReactivityDetails: "Pectate lyase. Forte réactivité croisée avec Cup a 1 (Cyprès).",
+    description: "Allergène majeur du cèdre du Japon, un pollen important en Asie de l'Est.",
+    pathologies: [Pathology.RHINITIS]
+  },
+  {
     id: 't241',
     name: 'rPla a 1',
     source: 'Platane',
@@ -139,7 +181,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Spécifique au groupe 1 des graminées. Faible réactivité hors de ce groupe.",
-    description: "Allergène majeur et spécifique de la phléole des prés et des autres graminées. Indication pour l'ITA."
+    description: "Allergène majeur et spécifique de la phléole des prés et des autres graminées. Indication pour l'ITA.",
+    pathologies: [Pathology.RHINITIS]
   },
   {
     id: 'g215',
@@ -151,7 +194,21 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Spécifique au groupe 5 des graminées.",
-    description: "Allergène majeur des graminées, important pour le diagnostic et l'indication de l'ITA."
+    description: "Allergène majeur des graminées, important pour le diagnostic et l'indication de l'ITA.",
+    pathologies: [Pathology.RHINITIS]
+  },
+  {
+    id: 'g213',
+    name: 'rPhl p 1 + rPhl p 5b',
+    source: 'Phléole des prés',
+    extract: 'Phléole des prés (g6)',
+    category: AllergenCategory.POLLEN_GRASSES,
+    type: AllergenType.MAJOR,
+    symptoms: [SymptomSeverity.SYSTEMIC],
+    crossReactivity: CrossReactivityLevel.LOW,
+    crossReactivityDetails: "Combinaison des allergènes majeurs du groupe 1 et 5 des graminées.",
+    description: "Test combiné des deux allergènes majeurs de la phléole pour un diagnostic de l'allergie aux graminées.",
+    pathologies: [Pathology.RHINITIS]
   },
   {
     id: 'g210',
@@ -178,6 +235,19 @@ export const allergens: Allergen[] = [
     crossReactivityDetails: "Profiline, panallergène. Réactivité croisée avec de nombreux pollens et aliments végétaux.",
     description: "Allergène mineur (profiline) qui peut entraîner une réaction croisée. Associé à des profils de sensibilisation plus complexes.",
     molecularFamily: MolecularFamily.PROFILINS
+  },
+  {
+    id: 'g214',
+    name: 'rPhl p 7 + rPhl p 12',
+    source: 'Phléole des prés',
+    extract: 'Phléole des prés (g6)',
+    category: AllergenCategory.POLLEN_GRASSES,
+    type: AllergenType.MINOR,
+    symptoms: [SymptomSeverity.LOCAL],
+    crossReactivity: CrossReactivityLevel.HIGH,
+    crossReactivityDetails: "Combinaison des panallergènes polcalcine et profiline des graminées.",
+    description: "Test combiné de la polcalcine et de la profiline de la phléole, marqueur de polysensibilisation aux pollens.",
+    molecularFamily: MolecularFamily.POLCALCINS
   },
   {
     id: 'g216',
@@ -228,7 +298,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.PROBABLE,
     crossReactivityDetails: "Pectate lyase. Réactivité croisée avec d'autres Asterales.",
-    description: "Allergène majeur de l'ambroisie, marqueur de sensibilisation primaire."
+    description: "Allergène majeur de l'ambroisie, marqueur de sensibilisation primaire.",
+    pathologies: [Pathology.RHINITIS]
   },
   {
     id: 'w211',
@@ -267,6 +338,32 @@ export const allergens: Allergen[] = [
     crossReactivityDetails: "Pectine méthylestérase. Spécifique à la soude.",
     description: "Allergène majeur de la Soude. Marqueur d'une véritable sensibilisation."
   },
+  {
+    id: 'chea1',
+    name: 'rChe a 1',
+    source: 'Chénopode',
+    extract: 'Chénopode blanc (w10)',
+    category: AllergenCategory.POLLEN_WEEDS,
+    type: AllergenType.MAJOR,
+    symptoms: [SymptomSeverity.SYSTEMIC],
+    crossReactivity: CrossReactivityLevel.MODERATE,
+    crossReactivityDetails: "Inhibiteur de trypsine. La réactivité croisée est à évaluer.",
+    description: "Allergène majeur du chénopode (amarante blanche).",
+    pathologies: [Pathology.RHINITIS]
+  },
+  {
+    id: 'mera1',
+    name: 'rMer a 1',
+    source: 'Mercuriale',
+    extract: 'Mercuriale annuelle (w15)',
+    category: AllergenCategory.POLLEN_WEEDS,
+    type: AllergenType.MINOR,
+    symptoms: [SymptomSeverity.LOCAL],
+    crossReactivity: CrossReactivityLevel.HIGH,
+    crossReactivityDetails: "Profiline. Panallergène avec réactivité croisée étendue.",
+    description: "Profiline de la mercuriale, marqueur de polysensibilisation.",
+    molecularFamily: MolecularFamily.PROFILINS
+  },
 
   // === ANIMAUX ===
   {
@@ -279,7 +376,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SEVERE, SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.NONE,
     crossReactivityDetails: "Spécifique au chat. Utéroglobuline.",
-    description: "Allergène majeur du chat, produit par les glandes salivaires et sébacées. Indication pour l'ITA. Marqueur prédictif d'allergie au chat."
+    description: "Allergène majeur du chat, produit par les glandes salivaires et sébacées. Indication pour l'ITA. Marqueur prédictif d'allergie au chat.",
+    pathologies: [Pathology.ASTHMA, Pathology.SEVERE_ASTHMA]
   },
   {
     id: 'e220',
@@ -316,7 +414,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.MODERATE,
     crossReactivityDetails: "Lipocaline. Risque modéré de réactivité croisée avec Can f 1.",
-    description: "Allergène mineur du chat, souvent reconnu avec Fel d 1 et Fel d 4 chez les patients symptomatiques."
+    description: "Allergène mineur du chat, souvent reconnu avec Fel d 1 et Fel d 4 chez les patients symptomatiques.",
+    pathologies: [Pathology.ASTHMA]
   },
   {
     id: 'e101',
@@ -328,7 +427,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.MODERATE,
     crossReactivityDetails: "Lipocaline. Réactivité croisée modérée avec d'autres lipocalines animales comme Fel d 7 (chat).",
-    description: "Allergène majeur du chien, marqueur de sensibilisation primaire. Indication pour une ITA."
+    description: "Allergène majeur du chien, marqueur de sensibilisation primaire. Indication pour une ITA.",
+    pathologies: [Pathology.ASTHMA, Pathology.SEVERE_ASTHMA]
   },
   {
     id: 'e102',
@@ -340,7 +440,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SEVERE, SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Lipocaline. Spécifique au chien.",
-    description: "Allergène mineur du chien, mais une sensibilisation est associée à des symptômes d'asthme sévère."
+    description: "Allergène mineur du chien, mais une sensibilisation est associée à des symptômes d'asthme sévère.",
+    pathologies: [Pathology.ASTHMA]
   },
   {
     id: 'e221',
@@ -440,7 +541,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC, SymptomSeverity.SEVERE],
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Protéase à cystéine. Spécifique aux acariens, réactivité croisée entre D. pteronyssinus et D. farinae.",
-    description: "Marqueur majeur de sensibilisation aux acariens. Associé au développement de l'asthme et au choix de l'ITA."
+    description: "Marqueur majeur de sensibilisation aux acariens. Associé au développement de l'asthme et au choix de l'ITA.",
+    pathologies: [Pathology.ASTHMA, Pathology.SEVERE_ASTHMA]
   },
   {
     id: 'd101',
@@ -452,7 +554,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC, SymptomSeverity.SEVERE],
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Protéase à cystéine. Forte réactivité croisée avec Der p 1.",
-    description: "Allergène majeur de D. farinae, analogue à Der p 1."
+    description: "Allergène majeur de D. farinae, analogue à Der p 1.",
+    pathologies: [Pathology.ASTHMA]
   },
   {
     id: 'd203',
@@ -464,7 +567,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC, SymptomSeverity.SEVERE],
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Famille NPC2. Spécifique aux acariens, réactivité croisée entre espèces d'acariens.",
-    description: "Allergène majeur des acariens, associé au risque d'asthme."
+    description: "Allergène majeur des acariens, associé au risque d'asthme.",
+    pathologies: [Pathology.ASTHMA, Pathology.SEVERE_ASTHMA]
   },
   {
     id: 'd204',
@@ -476,7 +580,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC, SymptomSeverity.SEVERE],
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Famille NPC2. Forte réactivité croisée avec Der p 2.",
-    description: "Allergène majeur de D. farinae, analogue à Der p 2."
+    description: "Allergène majeur de D. farinae, analogue à Der p 2.",
+    pathologies: [Pathology.ASTHMA]
   },
   {
     id: 'd209',
@@ -488,7 +593,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC, SymptomSeverity.SEVERE],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Protéine péritrophine-like. Spécifique aux acariens. Peut être sous-représenté dans les extraits.",
-    description: "Allergène majeur important pour le diagnostic précis et le choix de l'ITA."
+    description: "Allergène majeur important pour le diagnostic précis et le choix de l'ITA.",
+    pathologies: [Pathology.ASTHMA, Pathology.SEVERE_ASTHMA]
   },
   {
     id: 'd205',
@@ -539,7 +645,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SEVERE],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Spécifique à Alternaria. Interagit avec la protéine PR-5 du kiwi, causant des réactions possibles.",
-    description: "Marqueur majeur de sensibilisation à Alternaria. Facteur de risque pour l'asthme sévère. Indication pour l'ITA."
+    description: "Marqueur majeur de sensibilisation à Alternaria. Facteur de risque pour l'asthme sévère. Indication pour l'ITA.",
+    pathologies: [Pathology.ASTHMA, Pathology.SEVERE_ASTHMA]
   },
   {
     id: 'm230',
@@ -563,7 +670,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC, SymptomSeverity.SEVERE],
     crossReactivity: CrossReactivityLevel.NONE,
     crossReactivityDetails: "Spécifique à Aspergillus.",
-    description: "Marqueur majeur de sensibilisation à Aspergillus. Significatif chez les patients asthmatiques et souffrant d'Aspergillose Broncho-Pulmonaire Allergique (ABPA)."
+    description: "Marqueur majeur de sensibilisation à Aspergillus. Significatif chez les patients asthmatiques et souffrant d'Aspergillose Broncho-Pulmonaire Allergique (ABPA).",
+    pathologies: [Pathology.ASTHMA, Pathology.SEVERE_ASTHMA]
   },
   {
     id: 'm219',
@@ -637,7 +745,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SEVERE, SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Phospholipase A2. Permet de distinguer une vraie allergie à l'abeille d'une réactivité croisée avec les guêpes.",
-    description: "Allergène majeur du venin d'abeille. Essentiel pour le diagnostic et le choix de l'immunothérapie au venin (ITV)."
+    description: "Allergène majeur du venin d'abeille. Essentiel pour le diagnostic et le choix de l'immunothérapie au venin (ITV).",
+    pathologies: [Pathology.VENOM_ALLERGY]
   },
   {
     id: 'i214',
@@ -709,7 +818,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SEVERE, SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Antigène 5. Spécifique aux guêpes (Vespula).",
-    description: "Allergène majeur du venin de guêpe, essentiel pour distinguer une sensibilisation primaire à la guêpe vs abeille."
+    description: "Allergène majeur du venin de guêpe, essentiel pour distinguer une sensibilisation primaire à la guêpe vs abeille.",
+    pathologies: [Pathology.VENOM_ALLERGY]
   },
   {
     id: 'i210',
@@ -759,7 +869,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Protéine acide. Spécifique au latex.",
-    description: "Allergène majeur du latex, indicateur d'une sensibilisation primaire, courant chez les professionnels de santé."
+    description: "Allergène majeur du latex, indicateur d'une sensibilisation primaire, courant chez les professionnels de santé.",
+    pathologies: [Pathology.PROFESSIONAL_ALLERGY]
   },
   {
     id: 'k220',
@@ -771,7 +882,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC, SymptomSeverity.LOCAL],
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Hévéine. Associé au syndrome latex-aliment (banane, avocat, kiwi).",
-    description: "Allergène majeur chez les professionnels de santé, marqueur du syndrome latex-aliment."
+    description: "Allergène majeur chez les professionnels de santé, marqueur du syndrome latex-aliment.",
+    pathologies: [Pathology.PROFESSIONAL_ALLERGY]
   },
   {
     id: 'k224',
@@ -811,7 +923,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Protéine de stockage 7S, stable.",
     description: "Marqueur de risque de réactions systémiques à l'arachide.",
-    molecularFamily: MolecularFamily.STORAGE_PROTEINS
+    molecularFamily: MolecularFamily.STORAGE_PROTEINS,
+    pathologies: [Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f423',
@@ -824,7 +937,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Protéine de stockage 2S albumine, très stable.",
     description: "Marqueur de risque élevé de réactions systémiques sévères à l'arachide. Stable à la chaleur et à la digestion.",
-    molecularFamily: MolecularFamily.STORAGE_PROTEINS
+    molecularFamily: MolecularFamily.STORAGE_PROTEINS,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f424',
@@ -837,7 +951,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Protéine de stockage 11S, stable.",
     description: "Marqueur de risque de réactions systémiques à l'arachide.",
-    molecularFamily: MolecularFamily.STORAGE_PROTEINS
+    molecularFamily: MolecularFamily.STORAGE_PROTEINS,
+    pathologies: [Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f447',
@@ -850,7 +965,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Protéine de stockage conglutine, stable.",
     description: "Marqueur important d'allergie primaire, positif avec Ara h 2 augmente le risque de réactions sévères.",
-    molecularFamily: MolecularFamily.STORAGE_PROTEINS
+    molecularFamily: MolecularFamily.STORAGE_PROTEINS,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f352',
@@ -891,7 +1007,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "PR-10. Forte réactivité croisée avec le pollen de bouleau (Bet v 1).",
     description: "Associé à des réactions locales (syndrome d'allergie orale), labile à la chaleur. Faible risque de réaction systémique.",
-    molecularFamily: MolecularFamily.PR10
+    molecularFamily: MolecularFamily.PR10,
+    pathologies: [Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f425',
@@ -904,7 +1021,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "LTP. Réactivité croisée avec d'autres LTP (pêche).",
     description: "Marqueur de réactivité croisée (LTP). Associé à des réactions locales ou systémiques chez les patients sensibilisés, en particulier en Méditerranée.",
-    molecularFamily: MolecularFamily.LTP
+    molecularFamily: MolecularFamily.LTP,
+    pathologies: [Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f440',
@@ -917,7 +1035,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Protéine de stockage 11S Globuline, stable à la chaleur.",
     description: "Marqueur d'allergie primaire à la noisette, associé à un risque élevé de réactions systémiques sévères.",
-    molecularFamily: MolecularFamily.STORAGE_PROTEINS
+    molecularFamily: MolecularFamily.STORAGE_PROTEINS,
+    pathologies: [Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f439',
@@ -930,7 +1049,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Protéine de stockage 2S Albumine, stable à la chaleur.",
     description: "Marqueur d'allergie primaire à la noisette, associé à un risque élevé de réactions systémiques sévères.",
-    molecularFamily: MolecularFamily.STORAGE_PROTEINS
+    molecularFamily: MolecularFamily.STORAGE_PROTEINS,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f441',
@@ -1009,7 +1129,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SEVERE, SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.NONE,
     crossReactivityDetails: "Ovomucoïde. Spécifique de l'oeuf.",
-    description: "Résistant à la chaleur. Le patient réagira aux oeufs crus et cuits. Marqueur d'allergie persistante."
+    description: "Résistant à la chaleur. Le patient réagira aux oeufs crus et cuits. Marqueur d'allergie persistante.",
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f232',
@@ -1072,7 +1193,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SEVERE, SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Caséine. Réactivité croisée avec le lait de chèvre et brebis.",
-    description: "Protéine majeure du lait, résistante à la chaleur. Associée à une allergie persistante au lait (cru et cuit)."
+    description: "Protéine majeure du lait, résistante à la chaleur. Associée à une allergie persistante au lait (cru et cuit).",
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f76',
@@ -1084,7 +1206,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.LOCAL, SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "alpha-lactalbumine.",
-    description: "Protéine du lactosérum, sensible à la chaleur. Une tolérance au lait cuit est possible."
+    description: "Protéine du lactosérum, sensible à la chaleur. Une tolérance au lait cuit est possible.",
+    pathologies: [Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f77',
@@ -1096,7 +1219,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.LOCAL, SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "bêta-lactoglobuline.",
-    description: "Protéine du lactosérum, sensible à la chaleur. Associée à une meilleure probabilité de développer une tolérance."
+    description: "Protéine du lactosérum, sensible à la chaleur. Associée à une meilleure probabilité de développer une tolérance.",
+    pathologies: [Pathology.FOOD_ALLERGY]
   },
   {
     id: 'e204',
@@ -1203,7 +1327,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Tropomyosine. Panallergène des invertébrés (acariens, autres crustacés, insectes).",
     description: "Allergène majeur des crevettes, thermostable. Responsable de réactions croisées avec d'autres crustacés et les acariens (Der p 10).",
-    molecularFamily: MolecularFamily.TROPOMYOSINS
+    molecularFamily: MolecularFamily.TROPOMYOSINS,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f351-crab',
@@ -1216,7 +1341,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Tropomyosine. Forte réactivité croisée avec la crevette et d'autres crustacés.",
     description: "Marqueur d'allergie au crabe, due à la tropomyosine, le principal panallergène des crustacés.",
-    molecularFamily: MolecularFamily.TROPOMYOSINS
+    molecularFamily: MolecularFamily.TROPOMYOSINS,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f351-lobster',
@@ -1229,7 +1355,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Tropomyosine. Forte réactivité croisée avec la crevette et d'autres crustacés.",
     description: "Marqueur d'allergie au homard, due à la tropomyosine, le principal panallergène des crustacés.",
-    molecularFamily: MolecularFamily.TROPOMYOSINS
+    molecularFamily: MolecularFamily.TROPOMYOSINS,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f351-mussel',
@@ -1242,7 +1369,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Tropomyosine. Forte réactivité croisée avec les crustacés et autres mollusques.",
     description: "Marqueur d'allergie aux moules et autres mollusques, due à la tropomyosine.",
-    molecularFamily: MolecularFamily.TROPOMYOSINS
+    molecularFamily: MolecularFamily.TROPOMYOSINS,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f351-squid',
@@ -1255,7 +1383,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "Tropomyosine. Forte réactivité croisée avec les crustacés et autres mollusques.",
     description: "Marqueur d'allergie au calamar, due à la tropomyosine.",
-    molecularFamily: MolecularFamily.TROPOMYOSINS
+    molecularFamily: MolecularFamily.TROPOMYOSINS,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'penm2',
@@ -1294,7 +1423,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "PR-10. Réactivité croisée avec le pollen de bouleau.",
     description: "Associé au syndrome d'allergie orale chez les patients allergiques au bouleau. Labile à la chaleur.",
-    molecularFamily: MolecularFamily.PR10
+    molecularFamily: MolecularFamily.PR10,
+    pathologies: [Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f431',
@@ -1395,7 +1525,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.HIGH,
     crossReactivityDetails: "LTP. Marqueur de risque pour les réactions systémiques aux aliments végétaux, surtout en Méditerranée.",
     description: "Allergène majeur de la pêche, de type LTP. Stable à la chaleur, associé à des réactions sévères.",
-    molecularFamily: MolecularFamily.LTP
+    molecularFamily: MolecularFamily.LTP,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'f421',
@@ -1434,7 +1565,8 @@ export const allergens: Allergen[] = [
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "2S Albumine. Protéine de stockage.",
     description: "Allergène majeur du sésame, marqueur d'une allergie primaire et d'un risque élevé de réactions sévères.",
-    molecularFamily: MolecularFamily.STORAGE_PROTEINS
+    molecularFamily: MolecularFamily.STORAGE_PROTEINS,
+    pathologies: [Pathology.ANAPHYLAXIS, Pathology.FOOD_ALLERGY]
   },
   {
     id: 'fage2',
@@ -1562,7 +1694,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Groupe de cafards 1. Spécifique à la blatte.",
-    description: "Allergène majeur de la blatte germanique. Marqueur de sensibilisation primaire."
+    description: "Allergène majeur de la blatte germanique. Marqueur de sensibilisation primaire.",
+    pathologies: [Pathology.ASTHMA, Pathology.SEVERE_ASTHMA]
   },
   {
     id: 'blag2',
@@ -1574,7 +1707,8 @@ export const allergens: Allergen[] = [
     symptoms: [SymptomSeverity.SYSTEMIC],
     crossReactivity: CrossReactivityLevel.LOW,
     crossReactivityDetails: "Protéase aspartique.",
-    description: "Allergène majeur de la blatte, inactif en tant qu'enzyme."
+    description: "Allergène majeur de la blatte, inactif en tant qu'enzyme.",
+    pathologies: [Pathology.ASTHMA, Pathology.SEVERE_ASTHMA]
   },
   {
     id: 'blag5',

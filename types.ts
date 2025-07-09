@@ -56,6 +56,16 @@ export enum MolecularFamily {
     SERUM_ALBUMINS = 'Serum albumines',
 }
 
+export enum Pathology {
+  ASTHMA = "Asthme bronchique",
+  SEVERE_ASTHMA = "Asthme sévère",
+  RHINITIS = "Rhinite Allergique",
+  FOOD_ALLERGY = "Allergie alimentaire",
+  ANAPHYLAXIS = "Anaphylaxie / Réactions sévères",
+  PROFESSIONAL_ALLERGY = "Allergies professionnelles",
+  VENOM_ALLERGY = "Allergies aux venins",
+}
+
 export const molecularFamilyDescriptions: Record<MolecularFamily, string> = {
     [MolecularFamily.STORAGE_PROTEINS]: "Présentes dans les fruits à coque et dans les graines. THERMOSTABLES, résistantes à la digestion. Allergie alimentaire potentiellement sévère (albumines 2S), réactions systémiques fréquentes.",
     [MolecularFamily.PR10]: "Homologues de Bet v 1. Protéine THERMOLABILE. Souvent associée à des symptômes locaux = syndrome oral. Présent dans les fruits, les légumes, les fruits à coque et les pollens.",
@@ -82,4 +92,5 @@ export interface Allergen {
   crossReactivityDetails: string;
   description: string;
   molecularFamily?: MolecularFamily;
+  pathologies?: Pathology[];
 }
