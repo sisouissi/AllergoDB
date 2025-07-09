@@ -118,6 +118,22 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       </div>
 
       <div className="space-y-6">
+        {/* Pathology Filter (Dropdown) */}
+        <div>
+            <h3 className="text-lg font-medium text-gray-700 mb-3">Par pathologie allergique</h3>
+            <select
+                name="pathology"
+                value={selectedPathology || ''}
+                onChange={(e) => setSelectedPathology(e.target.value as Pathology || null)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-thermo-red focus:border-thermo-red transition bg-white"
+            >
+                <option value="">Toutes les pathologies</option>
+                {(Object.values(Pathology)).map(pathology => (
+                <option key={pathology} value={pathology}>{pathology}</option>
+                ))}
+            </select>
+        </div>
+
         {/* Type Filter */}
         <div>
           <h3 className="text-lg font-medium text-gray-700 mb-3">Type d'allergène</h3>
@@ -134,22 +150,6 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               </label>
             ))}
           </div>
-        </div>
-
-        {/* Pathology Filter (Dropdown) */}
-        <div>
-            <h3 className="text-lg font-medium text-gray-700 mb-3">Pathologies allergiques</h3>
-            <select
-                name="pathology"
-                value={selectedPathology || ''}
-                onChange={(e) => setSelectedPathology(e.target.value as Pathology || null)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-thermo-red focus:border-thermo-red transition bg-white"
-            >
-                <option value="">Toutes les pathologies</option>
-                {(Object.values(Pathology)).map(pathology => (
-                <option key={pathology} value={pathology}>{pathology}</option>
-                ))}
-            </select>
         </div>
 
         {/* Symptom Filter */}
